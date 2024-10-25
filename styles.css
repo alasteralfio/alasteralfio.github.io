@@ -1,0 +1,32 @@
+body {
+    font-family: "Space Mono", monospace !important;
+    font-weight: 400 !important;
+    color: white !important;
+    background-color: #273037 !important;
+}
+
+.nav-link {
+    font-family: "Space Mono", monospace;
+    font-weight: 400;
+    font-size: 18px !important;
+    color: white !important;
+}
+
+h1 {
+    font-family: "Space Mono", monospace !important;
+    font-weight: 400;
+    font-size: 140px !important;
+}
+
+.highlight {
+    color: #18c1a5;
+}
+
+div[class="row"] {
+    outline: 1px dotted rgba(0, 0, 0, 0.25);
+}
+
+div[class^="col-"] {
+    background-color: rgba(255, 0, 0, 0.2);
+    outline: 1px dotted rgba(0, 0, 0, 0.5);
+}
