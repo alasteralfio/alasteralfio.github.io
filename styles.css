@@ -1,7 +1,16 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: "Space Mono", monospace !important;
     font-weight: 400 !important;
     color: white !important;
+    background-color: #273037 !important;
+    overflow: scroll;
+}
+
+nav {
     background-color: #273037 !important;
 }
 
