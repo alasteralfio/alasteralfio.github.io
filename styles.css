@@ -22,6 +22,15 @@ h1 {
     color: #18c1a5;
 }
 
+#home-text {
+    padding-top: 25px;
+    padding-left: 100px;
+}
+
+#home-arrow {
+    padding-top: 200px;
+}
+
 div[class="row"] {
     outline: 1px dotted rgba(0, 0, 0, 0.25);
 }
