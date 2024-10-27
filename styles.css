@@ -27,8 +27,19 @@ h1 {
     font-size: 140px !important;
 }
 
+h2 {
+    font-family: "Space Mono", monospace !important;
+    font-weight: 400;
+    font-size: 80px !important;
+}
+
 .highlight {
-    color: #18c1a5;
+    color: #18c1a5 !important;
+}
+
+.force-white {
+    color: white !important;
+    text-decoration: none !important;
 }
 
 #home-text {
