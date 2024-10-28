@@ -42,6 +42,7 @@ h2 {
 
 .highlight {
     color: #18c1a5 !important;
+    text-decoration: none !important;
 }
 
 .force-white {
