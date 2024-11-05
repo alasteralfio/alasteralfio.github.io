@@ -65,7 +65,7 @@ function openProject(card) {
     contentSection.appendChild(title);
 
     const description = document.createElement("p");
-    description.textContent = projectDescription;
+    description.innerHTML = projectDescription;
     contentSection.appendChild(description);
 
     projectContainer.appendChild(contentSection);
