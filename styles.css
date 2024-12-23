@@ -1,168 +1,140 @@
 /* Base Styles */
-html {
-    scroll-behavior: smooth;
-}
-
 body {
-    font-family: "Space Mono", monospace !important;
-    font-weight: 400 !important;
-    color: white !important;
-    background-color: #273037 !important;
-    overflow: scroll;
+    margin: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    color: #000; /* Text color */
+    overflow-x: hidden;
 }
 
-body::-webkit-scrollbar {
-    display: none; /* For Chrome, Safari, and Edge */
+.container-fluid {
+    padding: 0 !important;
 }
 
-nav {
-    background-color: #273037 !important;
-}
 
-/* Navbar Links */
-.nav-link {
-    font-family: "Space Mono", monospace;
-    font-weight: 400;
-    font-size: 18px !important;
-    color: white !important;
-}
+/* Import Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700&display=swap');
 
-/* Headings */
+/* Typography */
 h1 {
-    font-family: "Space Mono", monospace !important;
+    font-family: 'Anton', Impact, sans-serif;
+    font-size: 3.5rem;
     font-weight: 400;
-    font-size: 140px !important;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-family: 'Inter', Arial, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    font-style: italic;
+    color: #666;
 }
 
 h2 {
-    font-family: "Space Mono", monospace !important;
+    font-family: 'Anton', Impact, sans-serif;
+    font-size: 2.5rem;
     font-weight: 400;
-    font-size: 80px !important;
+    margin-top: 2rem;
+    text-transform: uppercase;
 }
 
-.highlight {
-    color: #18c1a5 !important;
-    text-decoration: none !important;
-}
-
-.force-white {
-    color: white !important;
-    text-decoration: none !important;
-}
-
-/* Home Section */
-#home-text {
-    padding-top: 25px;
-    padding-left: 100px;
-}
-
-#home-arrow {
-    padding-top: 200px;
-}
-
-/* Project Cards */
-.project-card {
-    width: 400px;
-    height: 270px;
-    position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.project-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-}
-
-.project-card img {
-    width: 400px;
-    height: 270px;
-    object-fit: fill;
-    border-radius: 10px;
-}
-
-.read-more {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    color: white;
-    font-weight: bold;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.project-card:hover .read-more {
-    opacity: 1;
-}
-
-/* Overlay for Project Focus */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    overflow: hidden;
-}
-
-.project-container {
-    margin-top: 100px;
-    display: flex;
-    align-items: center;
-    background-color: #273037;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-    width: 70%;
-}
-
-.content-section {
-    color: white;
-    margin-right: 20px;
-    width: 30%;
-    overflow-y: auto;
-    overflow-wrap: break-word;
-}
-
-.content-section h2 {
-    font-size: 1.8rem;
-    color: #00f0ff;
-}
-
-.content-section p {
+p {
+    font-family: 'Inter', Arial, sans-serif;
+    line-height: 1.8;
     font-size: 1rem;
-    line-height: 1.5;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
 }
 
-.project-focus-image {
-    width: 720px;
-    height: 486px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+.navbar {
+    display: flex;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #ddd;
 }
 
-.social-icons a {
+.nav-link {
+    color: black;
     text-decoration: none;
+    font-weight: 600;
 }
 
-.social-icons img {
-    border: none;
+.nav-link:hover {
+    text-decoration: underline;
 }
 
+/* Responsive Layout for Smaller Screens */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
 
-/* 
-div[class="row"] {
-    outline: 1px dotted rgba(0, 0, 0, 0.25);
+    h2 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+    }
+
+    .scrollable-content {
+        padding: 1rem;
+    }
 }
 
-div[class^="col-"] {
-    background-color: rgba(255, 0, 0, 0.2);
-    outline: 1px dotted rgba(0, 0, 0, 0.5);
-} */
+/* Main Section */
+.main-section {
+    display: flex;
+    height: 100vh;
+}
+
+.image-section {
+    position: relative;
+    width: 50%; /* Keep image section fixed to half the screen */
+}
+
+.static-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover; /* Ensure the image fills the space without stretching */
+    overflow: hidden;
+    position: sticky; /* Make image stick to the viewport */
+    top: 0;
+}
+
+.scrollable-content {
+    height: 100vh; /* Ensure it takes up full viewport height */
+    overflow-y: auto; /* Allow only the content inside this to scroll */
+    padding: 2rem;
+}
+
+.content-wrapper {
+    height: auto; /* Allow content-wrapper to grow based on its content */
+    overflow-y: auto; /* Enable independent scrolling inside */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+}
+
+.content-wrapper::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
+/* Additional Section */
+.additional-section {
+    padding: 4rem;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+.additional-section h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.additional-section p {
+    font-size: 1.2rem;
+    color: #666;
+}
