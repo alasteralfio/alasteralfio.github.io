@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/css/style.css" />
+        <link rel="stylesheet" href="/css/responsive.css" />
+        <link rel="icon" href="image/favicon.png" type="image/png">
+        <title>GAME COLLECTION</title>
+    </head>
+
+    <body>
+        <main id="swup" class="transition-fade">
+        <header class="px-0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="navbar" data-navbar-type="long"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="img-sec">
+            <div class="image-holder">
+                <img src="/images/game.png" alt="" class="img-fluid" />
+            </div>
+            <div class="text-box">
+                <div class="container">
+                    <div class="row">
+                        <div class="project-heading col-12">
+                            <h2>Retro Game Collection</h2>
+                            <p>
+                                Built in GameMaker Studio 2.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="content-sec">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="content-box">
+                            <h2>Overview</h2>
+                            <p>
+                            Built in GameMaker Studio 2, this project includes retro classics like Asteroids, Pong,
+                            Atari Breakout, and Snake. All the games were custom designed and coded in GML Code.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="content-box">
+                            <h2>Purpose</h2>
+                            <p>
+                            With the rise of alternative game engines like Godot and GameMaker, I wanted to try my
+                            hands on one of them, having only experience on Unity. I chose GameMaker Studio 2 as it
+                            was a popular choice for 2D games, and has many available resources.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="content-box">
+                            <h2>Process</h2>
+                            <p>
+                            I first started with deciding what game to make. Pong and Snake were games I had in my
+                            generation growing up, so I wanted to pay tribute to my nostalgic beginnings. I then
+                            decided on Asteroids and Atari Breakout, as though they were just outside my generation,
+                            they were still classics that many people felt nostalgic about.<br><br>
+                            From there, I started with Asteroids by following a simple tutorial from the GameMaker
+                            website. It was a great way to understand basic concepts. At first, I didn't understand
+                            the reason behind certain choices GameMaker developers made, such as using key events
+                            instead of reading key inputs from the step event. But as I progressed, I understood
+                            the importance of these choices.<br><br>
+                            After Asteroids, I moved on to Pong, which was a bit more challenging. I had to understand
+                            how to make the ball bounce off the paddles and walls, and how to make the paddles move.
+                            Moving the paddles were easy enough, and I discovered the use of the clamp function, which
+                            prevents the paddles from moving out of bounds. The ball bouncing was quitea challenge,
+                            as I had to understand basic math concepts to calclate the ball bounce trajectories. The
+                            last part of Pong was the AI opponent, which was easy enough. I simply made the AI follow
+                            the ball's X position, and locked it to a set movement speed slightly slower than the player's.<br><br>
+                            Atari Breakout was next. This was by far the easiest to code aside from the Asteroids tutorial
+                            I followed. I already had the paddle movement and the ball bounce mechanics, so all I had to do
+                            was code the tiles to break once the ball hit them. <br><br>
+                            Finally, I moved on to Snake. This was the most challenging of the four games, as I had to
+                            understand how to make the snake grow when it eats the apple, and how to make the snake
+                            move in the direction the player inputs. I also had to make sure the snake didn't collide
+                            with itself, which was a challenge in itself. I had to understand how to make the snake
+                            move in a grid, and how to make the snake grow in the direction it was moving. All in all,
+                            it was a great learning journey with many, many, many trial and errors.<br><br>
+                            The collection will be released on itch.io soon, so stay tuned!
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-4 image-list">
+                        <img src="/images/game-1.png" alt="" class="img-fluid" /> 
+                        <img src="/images/game-2.png" alt="" class="img-fluid" />
+                        <img src="/images/game-3.png" alt="" class="img-fluid" />
+                        <img src="/images/game-4.png" alt="" class="img-fluid" />
+                    </div>
+                </div>
+            </div>
+        </section>
+        </main>
+
+        <div id="footer"></div>
+
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.bundle.min.js"></script>
+        <script src="/js/custom.js"></script>
+        <script src="https://unpkg.com/swup@4"></script>
+        <script defer src="/js/swup.js"></script>
+    </body>
+</html>
