@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import type { Achievement, Rarity } from "@/lib/data";
 import ArrowIcon from "./ArrowIcon";
@@ -7,29 +8,33 @@ import ArrowIcon from "./ArrowIcon";
 /** Gold is the unlock accent, so the pulse is gold regardless of rarity. */
 const GOLD = "232, 179, 77";
 
-const rarityStyle: Record<Rarity, { label: string; text: string; line: string; border: string }> = {
+/** `edge` is a flat rule, not a gradient. A fading hairline reads generic. */
+const rarityStyle: Record<
+  Rarity,
+  { label: string; text: string; edge: string; border: string }
+> = {
   common: {
     label: "Common",
     text: "text-rarity-common",
-    line: "via-rarity-common",
+    edge: "bg-rarity-common/50",
     border: "border-rarity-common/25",
   },
   rare: {
     label: "Rare",
     text: "text-rarity-rare",
-    line: "via-rarity-rare",
+    edge: "bg-rarity-rare/50",
     border: "border-rarity-rare/25",
   },
   epic: {
     label: "Epic",
     text: "text-rarity-epic",
-    line: "via-rarity-epic",
+    edge: "bg-rarity-epic/50",
     border: "border-rarity-epic/25",
   },
   legendary: {
     label: "Legendary",
     text: "text-rarity-legendary",
-    line: "via-rarity-legendary",
+    edge: "bg-rarity-legendary/70",
     border: "border-rarity-legendary/40",
   },
 };
@@ -98,7 +103,6 @@ function LockIcon() {
 export default function AchievementCard({ item }: { item: Achievement }) {
   const reduce = useReducedMotion();
   const variants = reduce ? fadeVariants : unlockVariants;
-  const viewport = { once: true, amount: 0.35 } as const;
 
   // Locked cards do not animate in. Nothing has been earned, so there is no
   // unlock to play, and reserving the reveal for unlocked work keeps it a
@@ -125,18 +129,18 @@ export default function AchievementCard({ item }: { item: Achievement }) {
 
   const rarity = rarityStyle[item.rarity];
 
-  return (
+  const card = (
     <motion.article
       variants={variants}
       initial="hidden"
       whileInView="visible"
-      viewport={viewport}
-      className={`js-reveal group relative flex flex-col gap-4 overflow-hidden rounded-2xl border bg-surface p-6 transition-colors duration-300 hover:bg-surfaceHi sm:p-7 ${rarity.border}`}
+      viewport={{ once: true, amount: 0.35 }}
+      className={`js-reveal relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl border bg-surface p-6 transition-colors duration-300 group-hover:bg-surfaceHi sm:p-7 ${rarity.border}`}
     >
-      {/* Rarity edge. Card identity, distinct from the gold unlock pulse. */}
+      {/* Rarity rule. Card identity, distinct from the gold unlock pulse. */}
       <span
         aria-hidden
-        className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent to-transparent ${rarity.line}`}
+        className={`absolute inset-x-0 top-0 h-px ${rarity.edge}`}
       />
 
       <div className="flex items-center justify-between gap-3">
@@ -167,7 +171,7 @@ export default function AchievementCard({ item }: { item: Achievement }) {
               key={tag}
               // Recessed rather than elevated: `muted` on `surfaceHi` is only
               // 4.36:1, the one spot in the design that missed AA.
-              className="rounded-full bg-ground/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-muted ring-1 ring-inset ring-white/5 group-hover:ring-white/10"
+              className="rounded-full bg-ground/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-muted ring-1 ring-inset ring-white/5"
             >
               {tag}
             </li>
@@ -175,25 +179,27 @@ export default function AchievementCard({ item }: { item: Achievement }) {
         </ul>
       )}
 
-      <div className="mt-auto pt-1">
-        {item.href ? (
-          <a
-            href={item.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group/link inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.14em] text-teal transition-colors hover:text-ink"
-          >
-            View repo
-            <ArrowIcon className="transition-transform duration-200 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
-          </a>
-        ) : (
-          item.note && (
-            <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
-              {item.note}
-            </p>
-          )
-        )}
-      </div>
+      {item.detail && (
+        <p className="mt-auto inline-flex items-center gap-1.5 pt-1 font-mono text-xs uppercase tracking-[0.14em] text-teal">
+          Read more
+          <ArrowIcon className="transition-transform duration-200 group-hover:translate-x-0.5" />
+        </p>
+      )}
     </motion.article>
   );
+
+  // Whole card is the link, so the detail page has one obvious entry point and
+  // there is no anchor nested inside another.
+  if (item.detail) {
+    return (
+      <Link
+        href={`/projects/${item.id}`}
+        className="group block h-full rounded-2xl"
+      >
+        {card}
+      </Link>
+    );
+  }
+
+  return card;
 }

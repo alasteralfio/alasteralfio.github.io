@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 
+// Root-relative so they also work from a project detail page.
 const links = [
-  { href: "#work", label: "Work" },
-  { href: "#ship30", label: "Ship30" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#ship30", label: "Ship30" },
+  { href: "/#projects", label: "Projects" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export default function Nav() {
@@ -31,13 +33,13 @@ export default function Nav() {
         className="mx-auto flex h-16 max-w-content items-center justify-between px-5 sm:px-8"
       >
         <a
-          href="#top"
+          href="/"
           className="font-display text-sm font-bold tracking-tight text-ink transition-colors hover:text-gold sm:text-base"
         >
           ALASTER
         </a>
 
-        <ul className="flex items-center gap-4 sm:gap-7">
+        <ul className="flex items-center gap-3 sm:gap-6">
           {links.map((link) => (
             <li key={link.href}>
               <a

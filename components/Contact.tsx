@@ -35,6 +35,24 @@ function LinkedInIcon() {
   );
 }
 
+function DocIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-5 w-5"
+      aria-hidden
+    >
+      <path d="M14 2.5H7.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V7z" />
+      <path d="M14 2.5V7h4.5M9 13h6M9 17h4" />
+    </svg>
+  );
+}
+
 const channels = [
   {
     label: "Email",
@@ -57,6 +75,13 @@ const channels = [
     icon: <LinkedInIcon />,
     external: true,
   },
+  {
+    label: "Résumé",
+    value: "PDF, one page",
+    href: profile.resume,
+    icon: <DocIcon />,
+    external: true,
+  },
 ];
 
 export default function Contact() {
@@ -66,7 +91,7 @@ export default function Contact() {
         Email is the fastest way to reach me.
       </p>
 
-      <ul className="grid gap-4 sm:grid-cols-3">
+      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {channels.map((channel) => (
           <li key={channel.label}>
             <a

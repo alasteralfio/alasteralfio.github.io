@@ -10,46 +10,103 @@
 
 export type Rarity = "common" | "rare" | "epic" | "legendary";
 
+/** Long-form content for a project's own page. Omit to render card-only. */
+export interface ProjectDetail {
+  /** Shown under the title on the detail page. */
+  timeframe?: string;
+  /** What the work was, in a few paragraphs. */
+  overview: string[];
+  /** What was learned or what would change. First person. */
+  reflection: string[];
+}
+
 export interface Achievement {
   id: string;
   /** Real title. Forced to "???" in the UI while locked. */
   title: string;
   blurb: string;
-  /** Hidden while locked. */
   tags?: string[];
   rarity: Rarity;
-  /** External link. Omitted for internal work (PSAT) and locked entries. */
+  /** External link. Omitted for internal work and locked entries. */
   href?: string;
   /** Explains an absent link, e.g. internal work with no public repo. */
   note?: string;
   /** true => desaturated, "???", no tags or link. */
   locked?: boolean;
-  /** Ship30 index. Absent for work outside the program (e.g. PSAT). */
+  /** Ship30 index. Absent for work outside the program. */
   shipNumber?: number;
+  /** Present => card links to /projects/<id> for the long write-up. */
+  detail?: ProjectDetail;
 }
 
-/**
- * Counts Ship30-program drops only. PSAT is an unlocked achievement but is
- * internship work, not one of the 30, so two cards can be unlocked while the
- * bar still reads 1/30.
- */
 export const ship30 = {
   shipped: 1,
   total: 30,
-  /** Running log of every drop. */
   logHref: "https://github.com/alasteralfio/ship30",
 } as const;
 
 export const profile = {
   name: "Alaster Alfio",
   role: "Software Developer",
-  roleDetail:
-    "LTA PSAT Intern · Final-year Dip. Digital Design & Development, RP",
-  bio: "Building path-safety tooling at LTA, shipping small tools on the side.",
+  roleDetail: "Dip. Digital Design & Development, Republic Polytechnic",
+  status: "Graduating Sep 2026",
+  bio: "Spent the first half of 2026 building path-safety tooling at LTA. Now shipping small tools while I wait on graduation.",
   email: "alasteralfio@gmail.com",
   github: "https://github.com/alasteralfio",
   linkedin: "https://www.linkedin.com/in/alaster-alfio-zheng-b36b99279/",
+  resume: "/alaster-alfio-resume.pdf",
 } as const;
+
+export interface Experience {
+  company: string;
+  role: string;
+  period: string;
+  points: string[];
+}
+
+export const experience: Experience[] = [
+  {
+    company: "Land Transport Authority",
+    role: "Software Developer Intern",
+    period: "Mar 2026 – Jul 2026",
+    points: [
+      "Built an end-to-end gradient processing pipeline from raw LiDAR point clouds, covering centerline stitching, outlier and seam-jump filtering, and slope computation, replacing a manual geospatial workflow.",
+      "Added polygon-based planning area selection over GIS shapefile layers so assessors could scope assessments spatially instead of picking roads one at a time.",
+      "Designed a multi-user profile and project system so the tool could be deployed safely on shared department devices.",
+      "Introduced Git, Jira ticket tracking, and shared documentation to the team, which moved projected delivery from December to end-July.",
+    ],
+  },
+  {
+    company: "MOBOT SG",
+    role: "IT Web Developer / E-Commerce Manager",
+    period: "Sep 2025 – Dec 2025",
+    points: [
+      "Managed 50+ high-value products doing around SGD 30,000 in monthly sales.",
+      "Built custom back-end integrations for Shopify to support global order fulfillment.",
+      "Built landing, navigation, and product pages in custom HTML and Shopify Liquid.",
+      "Automated first-line customer service with an n8n and Zapier chatbot, cutting routine inquiry tickets by 80%.",
+    ],
+  },
+  {
+    company: "The Brainery Code",
+    role: "STEM Instructor",
+    period: "Apr 2025 – Aug 2025",
+    points: [
+      "Taught programming and game development to students aged 4 to 16 across Roblox Scripting, Minecraft Education, Scratch, and EduBlocks.",
+      "Ran robotics lessons on LEGO Spike Prime and LEGO Essentials.",
+      "Coached competition teams; all three entered placed at the 2025 RoboCup U12 Grand Prix.",
+    ],
+  },
+  {
+    company: "UPFUE SG",
+    role: "E-Commerce Product Manager",
+    period: "Dec 2022 – Dec 2023",
+    points: [
+      "Managed a catalogue of over 20,000 products, handling categorisation and search optimisation.",
+      "Used performance data to inform pricing and promotion decisions.",
+    ],
+  },
+];
 
 export const achievements: Achievement[] = [
   {
@@ -57,9 +114,121 @@ export const achievements: Achievement[] = [
     title: "Path Safety Assessment Tool",
     blurb:
       "CycleRAP-based web tool that scores path segments for cycling safety. Extracts curvature by circumcircle, width by single-view metrology, and grade from LiDAR point clouds. All three used to be measured by hand.",
-    tags: ["GIS", "Computer Vision", "LiDAR", "LTA Internship"],
+    tags: ["GIS", "Computer Vision", "LiDAR", "Python"],
     rarity: "legendary",
     note: "Internal LTA project, no public repo.",
+    detail: {
+      timeframe: "Land Transport Authority · Mar 2026 – Jul 2026",
+      overview: [
+        "PSAT scores cycling path segments against CycleRAP, a road-safety assessment methodology. Assessors used to collect the inputs by hand: measuring how sharply a path curves, how wide it is, and how steeply it climbs, segment by segment.",
+        "I automated all three. Curvature comes from fitting a circumcircle through points along the centerline. Width comes from single-view metrology, recovering real-world distances from a single camera image using homography. Grade comes from raw LiDAR point clouds, through a pipeline that stitches centerlines, filters outliers and seam jumps where survey passes meet, and computes slope along the result.",
+        "Alongside the extraction work I added polygon-based planning area selection over GIS shapefile layers, so an assessor can draw a region and scope an assessment spatially rather than selecting roads individually, and a multi-user profile system so the tool could run safely on shared department machines.",
+      ],
+      reflection: [
+        "The hardest part was not the geometry, it was the messiness of real survey data. Seam jumps where two LiDAR passes meet will quietly ruin a slope calculation, and I spent far longer on filtering and validation than on the slope maths itself.",
+        "The other thing I took away was process. The team had no version control or ticket tracking when I arrived. Introducing Git, Jira, and shared documentation felt like a detour from writing code, but it was what moved the projected delivery from December to the end of July.",
+      ],
+    },
+  },
+  {
+    id: "clinical-chatbot",
+    title: "Clinical Guidelines Chatbot",
+    blurb:
+      "Final year project with KK Women's and Children's Hospital. A web chatbot that gives nurses bedside access to clinical guidelines and medical calculators, using NLP and semantic search instead of manual lookup.",
+    tags: ["Python", "JavaScript", "n8n", "NLP"],
+    rarity: "epic",
+    note: "Built with KKH, no public repo.",
+    detail: {
+      timeframe: "Final Year Project · Republic Polytechnic",
+      overview: [
+        "Nurses need clinical guidelines and dosage calculations at the bedside, under time pressure. Looking either one up manually is slow at exactly the moment speed matters most.",
+        "The system is a responsive web chatbot that answers guideline questions and runs medical calculators from plain language. It uses natural language processing and semantic search so a nurse can ask a question the way they would say it, rather than matching an exact document title.",
+        "I built the middleware that routes between the NLP engine and the clinical data, which is where correctness actually lives: the retrieval has to return the right guideline and the calculators have to execute exactly. The interface is mobile-first, because it is used standing up, and includes gamified quizzes and clinical scenarios for ongoing training.",
+      ],
+      reflection: [
+        "Working against a clinical brief changed how I thought about failure. In most projects a wrong answer is a bug; here a plausible-but-wrong dosage is worse than no answer at all, so the calculators execute deterministically rather than being generated.",
+        "If I revisited it I would spend more time on evaluating retrieval quality systematically instead of testing by hand against questions I thought to ask.",
+      ],
+    },
+  },
+  {
+    id: "upbringing",
+    title: "Upbringing",
+    blurb:
+      "VR horror puzzle game built in Unity for the HTC Vive. The player navigates a haunted toy house, avoids Mother, and solves puzzles to escape. All 2D art hand-made.",
+    tags: ["Unity", "C#", "VR", "Photoshop"],
+    rarity: "epic",
+    note: "Not available for download.",
+    detail: {
+      timeframe: "Republic Polytechnic",
+      overview: [
+        "Upbringing is a VR game built in Unity with the XR Interaction Toolkit, targeting the HTC Vive and coded in C#. It takes place in a haunted toy house standing in for a twisted childhood. The player avoids Mother, the antagonist, and solves puzzles to escape.",
+        "It started as a school assignment. I kept going well past what the assignment needed because I liked what the game was becoming.",
+        "Every 2D asset (walls, floors, mannequins, props) I made myself in Photoshop and GIMP. The mannequin poses were sketched roughly first, and the symbols on them were freestyled with reference to Minecraft's enchantment table glyphs. The 3D assets came from the Unity Asset Store and were modified to match the art direction.",
+      ],
+      reflection: [
+        "Lighting came first, before any layout work. I wanted an intentionally dark atmosphere rather than a dark scene that just looked underlit, and getting there took a lot of trial and error.",
+        "Coding took the longest by far: the chase AI for the mannequins, the randomisation of their poses and symbols, and the final Simon Says puzzle. That last one was the most fiddly, since the generated sequence had to persist and be checked against player input correctly rather than approximately.",
+      ],
+    },
+  },
+  {
+    id: "scamateur",
+    title: "Scamateur",
+    blurb:
+      "DSTA BrainHack CODE_EXP finalist. A gamified take on scam awareness that puts the player in a grassroots volunteer role, so they think before clicking and see the damage from the victim's side.",
+    tags: ["GameMaker", "C#", "JavaScript", "Hackathon"],
+    rarity: "rare",
+    note: "Hackathon submission, no public repo.",
+    detail: {
+      timeframe: "DSTA BrainHack 2025 CODE_EXP · Finalist",
+      overview: [
+        "Scam awareness campaigns tend to tell people what not to click. We tried the opposite: put the player in the position of a grassroots volunteer helping victims, so the cost of a scam is something they encounter rather than something they are warned about.",
+        "I led ideation and project management, and pushed development across the full stack in GameMaker to get a complete submission inside hackathon time.",
+      ],
+      reflection: [
+        "The team had uneven experience with the engine, so a real part of my job was closing that gap while the clock ran rather than absorbing the work myself. Splitting tasks by what someone could learn in the time available, instead of by what they already knew, is the thing I would carry into the next one.",
+        "We made finalist. The submission was complete and playable end to end, which mattered more than any single feature we cut to get there.",
+      ],
+    },
+  },
+  {
+    id: "retro-games",
+    title: "Retro Game Collection",
+    blurb:
+      "Asteroids, Pong, Atari Breakout, and Snake, all custom built in GameMaker Studio 2 with GML. A deliberate move off Unity to learn a second engine.",
+    tags: ["GameMaker", "GML", "Game Dev"],
+    rarity: "rare",
+    detail: {
+      overview: [
+        "Four retro classics rebuilt from scratch in GameMaker Studio 2, written in GML. I had only worked in Unity before and wanted to learn a second engine properly rather than read about it.",
+        "Pong and Snake I picked for nostalgia. Asteroids and Breakout sit just outside my generation but are classics people still recognise.",
+      ],
+      reflection: [
+        "Asteroids came from a tutorial and was mostly about learning the engine's idioms. Early on I did not understand why GameMaker pushes key events instead of reading input in the step event; that made sense later.",
+        "Pong was where the actual thinking started, working out bounce trajectories and finding the clamp function to keep paddles in bounds. The AI opponent just tracks the ball's position at a speed slightly below the player's, which is enough to feel fair.",
+        "Snake was the hardest. Growing the body in the direction of travel, moving on a grid, and self-collision each took more attempts than I expected.",
+      ],
+    },
+  },
+  {
+    id: "mastermind",
+    title: "Mastermind CLI",
+    blurb:
+      "The board game Mastermind, ported to the terminal in Python. Extensively configurable: sequence length, duplicate colours, and other rules are all left to the player.",
+    tags: ["Python", "CLI"],
+    rarity: "common",
+    note: "Source not currently public.",
+    detail: {
+      overview: [
+        "Mastermind is a code-breaking board game. This is a terminal port written in Python, submitted for a Python course that let us choose our own project. I picked it to work on something with real game logic rather than a project everyone else would also hand in.",
+        "The player can configure the rules rather than play one fixed variant: sequence length, whether duplicates are allowed, and similar options.",
+      ],
+      reflection: [
+        "It was one of my first Python projects and it showed. Getting the guess-scoring logic right took a lot of trial and error, and I built the menu first mostly so I could see where the program was going.",
+        "Once it worked I went back through and pulled out every value that could reasonably be a player choice. I also cared about how it looked despite being a terminal game, so it has an ASCII logo and a UI laid out to be read rather than just printed.",
+      ],
+    },
   },
   {
     id: "openconvert",
@@ -70,6 +239,16 @@ export const achievements: Achievement[] = [
     rarity: "common",
     href: "https://github.com/alasteralfio/ship30-01-openconvert",
     shipNumber: 1,
+    detail: {
+      overview: [
+        "A Chrome extension that converts currency on demand. I was shopping on a foreign site, converting prices in my head one at a time, and wanted it to stop.",
+        "Ship30 drop #01. The scope is deliberately small: it converts when you invoke it and does nothing otherwise.",
+      ],
+      reflection: [
+        "Every extension I found for this ran constantly in the background and rewrote pages I had not asked it to touch. A one-off annoyance did not justify that, so the whole design decision was to stay inert until called.",
+        "Keeping it that small is why it actually shipped, which is the entire point of the Ship30 exercise.",
+      ],
+    },
   },
   {
     id: "steam-clustering",
@@ -100,3 +279,5 @@ export const achievements: Achievement[] = [
     locked: true,
   },
 ];
+
+export const projectsWithDetail = achievements.filter((a) => a.detail && !a.locked);

@@ -12,9 +12,9 @@ export default function Section({ id, label, title, children }: SectionProps) {
     <section
       id={id}
       aria-labelledby={headingId}
-      className="mx-auto max-w-content px-5 py-16 sm:px-8 sm:py-24"
+      className="mx-auto max-w-content px-5 py-10 sm:px-8 sm:py-14"
     >
-      <div className="mb-10 sm:mb-14">
+      <div className="mb-8 sm:mb-10">
         <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-gold">
           {label}
         </p>
