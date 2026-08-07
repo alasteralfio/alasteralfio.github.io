@@ -37,7 +37,7 @@ export const ship30 = {
   shipped: 1,
   total: 30,
   /** Running log of every drop. */
-  logHref: "https://github.com/alasteralfio",
+  logHref: "https://github.com/alasteralfio/ship30",
 } as const;
 
 export const profile = {

@@ -62,7 +62,7 @@ const channels = [
 export default function Contact() {
   return (
     <Section id="contact" label="Contact" title="Get in touch">
-      <p className="mb-9 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+      <p className="mb-9 max-w-2xl text-base leading-relaxed text-body sm:text-lg">
         Open to talking about internships, junior roles, or anything on the
         roadmap above.
       </p>

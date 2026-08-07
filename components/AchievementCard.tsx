@@ -137,7 +137,7 @@ export default function AchievementCard({ item }: { item: Achievement }) {
           <span className="sr-only">Locked achievement</span>
         </h3>
 
-        <p className="text-sm leading-relaxed text-muted/80">{item.blurb}</p>
+        <p className="text-sm leading-relaxed text-muted">{item.blurb}</p>
       </motion.article>
     );
   }
@@ -175,7 +175,7 @@ export default function AchievementCard({ item }: { item: Achievement }) {
         {item.title}
       </h3>
 
-      <p className="text-sm leading-relaxed text-muted sm:text-[15px]">
+      <p className="text-sm leading-relaxed text-body sm:text-[15px]">
         {item.blurb}
       </p>
 
@@ -184,7 +184,9 @@ export default function AchievementCard({ item }: { item: Achievement }) {
           {item.tags.map((tag) => (
             <li
               key={tag}
-              className="rounded-full bg-surfaceHi px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-muted ring-1 ring-inset ring-white/5 group-hover:ring-white/10"
+              // Recessed rather than elevated: `muted` on `surfaceHi` is only
+              // 4.36:1, the one spot in the design that missed AA.
+              className="rounded-full bg-ground/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-muted ring-1 ring-inset ring-white/5 group-hover:ring-white/10"
             >
               {tag}
             </li>
@@ -205,7 +207,7 @@ export default function AchievementCard({ item }: { item: Achievement }) {
           </a>
         ) : (
           item.note && (
-            <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted/70">
+            <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
               {item.note}
             </p>
           )

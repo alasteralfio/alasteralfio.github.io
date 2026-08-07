@@ -34,7 +34,7 @@ export default function Hero() {
             {profile.roleDetail}
           </p>
 
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+          <p className="mt-6 max-w-2xl text-base leading-relaxed text-body sm:text-lg">
             {profile.bio}
           </p>
 

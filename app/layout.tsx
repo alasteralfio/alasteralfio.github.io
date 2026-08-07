@@ -23,7 +23,19 @@ const mono = JetBrains_Mono({
 
 const description = `${profile.role} — ${profile.bio}`;
 
+/**
+ * Absolute base for OG/Twitter image URLs. Vercel sets the production-domain
+ * var automatically, so this resolves correctly without hardcoding a domain
+ * that is still undecided. Override with NEXT_PUBLIC_SITE_URL once one exists.
+ */
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: `${profile.name} — ${profile.role}`,
   description,
   openGraph: {

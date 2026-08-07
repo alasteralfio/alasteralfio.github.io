@@ -14,7 +14,10 @@ export default function ProgressBar({
   size = "sm",
 }: ProgressBarProps) {
   const reduce = useReducedMotion();
-  const pct = total > 0 ? Math.round((shipped / total) * 100) : 0;
+  const ratio = total > 0 ? shipped / total : 0;
+  /** Rounded for the label only — the fill uses the exact ratio, so it lands
+   *  precisely on a slot divider instead of stopping fractionally short. */
+  const pct = Math.round(ratio * 100);
 
   /**
    * The gradient sits full-width underneath so early progress shows the gold
@@ -23,7 +26,7 @@ export default function ProgressBar({
    * a transform, so it animates on the compositor and cannot fail to
    * interpolate the way `clip-path` strings do.
    */
-  const masked = 1 - pct / 100;
+  const masked = 1 - ratio;
 
   return (
     <div className={size === "lg" ? "space-y-3" : "space-y-2"}>

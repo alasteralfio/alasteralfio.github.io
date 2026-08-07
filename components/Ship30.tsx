@@ -8,7 +8,7 @@ export default function Ship30() {
   return (
     <Section id="ship30" label="Progress" title="Ship30">
       <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
-        <div className="space-y-5 text-base leading-relaxed text-muted sm:text-lg">
+        <div className="space-y-5 text-base leading-relaxed text-body sm:text-lg">
           <p>
             A public commitment to ship {ship30.total} small, finished things.
             Not side projects that rot in a branch — things that get released and

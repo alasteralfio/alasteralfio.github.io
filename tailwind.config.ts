@@ -17,6 +17,13 @@ const config: Config = {
         gold: "#E8B34D",
         teal: "#4FD1C5",
         ink: "#EDEEF2",
+        /**
+         * Reading copy — paragraphs and card blurbs. Sits between `ink` and
+         * `muted`: the token doc reserves `muted` for labels and metadata, and
+         * multi-line body text set in it reads dim (4.8:1 on `surface`).
+         * This is 8.6:1 on `surface`, 9.4:1 on `ground`.
+         */
+        body: "#B6BCCB",
         muted: "#868C9C",
         // Rarity ladder — game vocabulary. Only `common` and `legendary`
         // are in use today; the rest are here for future drops.
