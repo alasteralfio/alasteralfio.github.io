@@ -10,7 +10,7 @@ export const runtime = "edge";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = `${profile.name} — ${profile.role}`;
+export const alt = `${profile.name} · ${profile.role}`;
 
 /**
  * The hero "player card", rendered as the social preview.
@@ -119,7 +119,7 @@ export default function OpengraphImage() {
             }}
           >
             {/* Clips a full-track-width gradient rather than squashing the
-                whole ramp into the fill, so early progress reads gold — the
+                whole ramp into the fill, so early progress reads gold. The
                 same reason the site's bar masks instead of scaling. Track
                 width is fixed: 1200 - (72 page + 56 card + 1 border) * 2. */}
             <div

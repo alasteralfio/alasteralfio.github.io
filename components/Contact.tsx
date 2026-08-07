@@ -63,8 +63,7 @@ export default function Contact() {
   return (
     <Section id="contact" label="Contact" title="Get in touch">
       <p className="mb-9 max-w-2xl text-base leading-relaxed text-body sm:text-lg">
-        Open to talking about internships, junior roles, or anything on the
-        roadmap above.
+        Email is the fastest way to reach me.
       </p>
 
       <ul className="grid gap-4 sm:grid-cols-3">

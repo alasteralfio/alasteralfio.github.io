@@ -2,8 +2,9 @@
 
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import type { Achievement, Rarity } from "@/lib/data";
+import ArrowIcon from "./ArrowIcon";
 
-/** Gold is the unlock accent — the pulse is gold regardless of rarity. */
+/** Gold is the unlock accent, so the pulse is gold regardless of rarity. */
 const GOLD = "232, 179, 77";
 
 const rarityStyle: Record<Rarity, { label: string; text: string; line: string; border: string }> = {
@@ -59,7 +60,7 @@ const unlockVariants: Variants = {
 };
 
 /**
- * Reduced motion: no desaturation, no pulse — just a plain fade.
+ * Reduced motion: no desaturation, no pulse, just a plain fade.
  *
  * `filter` and `y` are neutralised explicitly rather than omitted. The server
  * renders before `useReducedMotion` can report, so it emits the unlock
@@ -94,37 +95,17 @@ function LockIcon() {
   );
 }
 
-function ArrowIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-3.5 w-3.5 transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
-      aria-hidden
-    >
-      <path d="M7 17 17 7M9 7h8v8" />
-    </svg>
-  );
-}
-
 export default function AchievementCard({ item }: { item: Achievement }) {
   const reduce = useReducedMotion();
   const variants = reduce ? fadeVariants : unlockVariants;
   const viewport = { once: true, amount: 0.35 } as const;
 
+  // Locked cards do not animate in. Nothing has been earned, so there is no
+  // unlock to play, and reserving the reveal for unlocked work keeps it a
+  // single deliberate moment rather than a page-wide fade.
   if (item.locked) {
     return (
-      <motion.article
-        variants={fadeVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={viewport}
-        className="js-reveal flex flex-col gap-3 rounded-2xl border border-dashed border-white/10 bg-surface/40 p-5 transition-colors duration-300 hover:border-white/20"
-      >
+      <article className="flex flex-col gap-3 rounded-2xl border border-dashed border-white/10 bg-surface/40 p-5 transition-colors duration-300 hover:border-white/20">
         <div className="flex items-center justify-between text-muted">
           <LockIcon />
           <span className="font-mono text-[10px] uppercase tracking-[0.18em]">
@@ -138,7 +119,7 @@ export default function AchievementCard({ item }: { item: Achievement }) {
         </h3>
 
         <p className="text-sm leading-relaxed text-muted">{item.blurb}</p>
-      </motion.article>
+      </article>
     );
   }
 
@@ -152,7 +133,7 @@ export default function AchievementCard({ item }: { item: Achievement }) {
       viewport={viewport}
       className={`js-reveal group relative flex flex-col gap-4 overflow-hidden rounded-2xl border bg-surface p-6 transition-colors duration-300 hover:bg-surfaceHi sm:p-7 ${rarity.border}`}
     >
-      {/* Rarity edge — card identity, distinct from the gold unlock pulse. */}
+      {/* Rarity edge. Card identity, distinct from the gold unlock pulse. */}
       <span
         aria-hidden
         className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent to-transparent ${rarity.line}`}
@@ -203,7 +184,7 @@ export default function AchievementCard({ item }: { item: Achievement }) {
             className="group/link inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.14em] text-teal transition-colors hover:text-ink"
           >
             View repo
-            <ArrowIcon />
+            <ArrowIcon className="transition-transform duration-200 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
           </a>
         ) : (
           item.note && (

@@ -6,16 +6,10 @@ export default function Hero() {
     <section
       id="top"
       aria-labelledby="hero-heading"
-      className="relative overflow-hidden px-5 pb-12 pt-28 sm:px-8 sm:pb-16 sm:pt-36"
+      className="px-5 pb-12 pt-28 sm:px-8 sm:pb-16 sm:pt-36"
     >
-      {/* Soft gold bloom — depth without a template gradient wash. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 h-[36rem] w-[52rem] max-w-none -translate-x-1/2 -translate-y-1/3 rounded-full bg-gold/[0.07] blur-[120px]"
-      />
-
-      <div className="relative mx-auto max-w-content">
-        <div className="rounded-3xl border border-white/10 bg-surface/60 p-7 backdrop-blur-sm sm:p-10 lg:p-14">
+      <div className="mx-auto max-w-content">
+        <div className="rounded-3xl border border-white/10 bg-surface p-7 sm:p-10 lg:p-14">
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-gold">
             Player Card
           </p>
@@ -37,21 +31,6 @@ export default function Hero() {
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-body sm:text-lg">
             {profile.bio}
           </p>
-
-          <div className="mt-9 flex flex-wrap items-center gap-3">
-            <a
-              href="#work"
-              className="rounded-full bg-gold px-5 py-2.5 font-mono text-xs uppercase tracking-[0.14em] text-ground transition-colors hover:bg-gold/85"
-            >
-              View work
-            </a>
-            <a
-              href="#contact"
-              className="rounded-full border border-white/15 px-5 py-2.5 font-mono text-xs uppercase tracking-[0.14em] text-ink transition-colors hover:border-white/30 hover:bg-surfaceHi"
-            >
-              Get in touch
-            </a>
-          </div>
 
           <hr className="my-9 border-white/10" />
 

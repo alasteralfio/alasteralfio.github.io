@@ -3,7 +3,7 @@
  *
  * Adding a shipped project = editing this file. Nothing else needs to change.
  *
- * Locked entries keep their real titles/blurbs here — the UI masks them as "???"
+ * Locked entries keep their real titles/blurbs here. The UI masks them as "???"
  * for visitors. When one ships: set `locked: false`, add `tags`, `href`, and a
  * `shipNumber` if it is part of the Ship30 program, then bump `ship30.shipped`.
  */
@@ -30,7 +30,7 @@ export interface Achievement {
 
 /**
  * Counts Ship30-program drops only. PSAT is an unlocked achievement but is
- * internship work, not one of the 30 — so two cards can be unlocked while the
+ * internship work, not one of the 30, so two cards can be unlocked while the
  * bar still reads 1/30.
  */
 export const ship30 = {
@@ -56,16 +56,16 @@ export const achievements: Achievement[] = [
     id: "psat",
     title: "Path Safety Assessment Tool",
     blurb:
-      "CycleRAP-based web tool that scores path segments for cycling safety. Automates curvature (circumcircle), width (single-view metrology / homography), and grade (LiDAR point cloud) extraction — work previously done by hand.",
+      "CycleRAP-based web tool that scores path segments for cycling safety. Extracts curvature by circumcircle, width by single-view metrology, and grade from LiDAR point clouds. All three used to be measured by hand.",
     tags: ["GIS", "Computer Vision", "LiDAR", "LTA Internship"],
     rarity: "legendary",
-    note: "Internal LTA project — no public repo.",
+    note: "Internal LTA project, no public repo.",
   },
   {
     id: "openconvert",
     title: "OpenConvert",
     blurb:
-      "Built after getting tired of manually converting currency while shopping on a foreign site — a one-time annoyance that didn't justify a permanent extension. Converts on demand, nothing more.",
+      "Built after getting tired of manually converting prices while shopping on a foreign site. It converts only when you ask it to, because a one-off annoyance didn't justify an extension that runs all the time.",
     tags: ["Chrome Extension", "JavaScript"],
     rarity: "common",
     href: "https://github.com/alasteralfio/ship30-01-openconvert",

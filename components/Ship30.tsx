@@ -1,4 +1,5 @@
 import { ship30 } from "@/lib/data";
+import ArrowIcon from "./ArrowIcon";
 import ProgressBar from "./ProgressBar";
 import Section from "./Section";
 
@@ -11,13 +12,12 @@ export default function Ship30() {
         <div className="space-y-5 text-base leading-relaxed text-body sm:text-lg">
           <p>
             A public commitment to ship {ship30.total} small, finished things.
-            Not side projects that rot in a branch — things that get released and
-            solve one real annoyance.
+            The bar for each one is that it gets released and solves a real
+            annoyance.
           </p>
           <p>
-            Each drop gets its own repo and becomes an achievement here. Keeping
-            the count public is the point: it is harder to stall when the number
-            is visible.
+            Each drop gets its own repo and shows up here as an achievement. The
+            count is public so that stalling is obvious.
           </p>
           <p className="text-ink">
             {ship30.shipped} shipped. {remaining} to go.
@@ -30,18 +30,7 @@ export default function Ship30() {
             className="inline-flex items-center gap-1.5 pt-1 font-mono text-xs uppercase tracking-[0.14em] text-teal transition-colors hover:text-ink"
           >
             Running log on GitHub
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-3.5 w-3.5"
-              aria-hidden
-            >
-              <path d="M7 17 17 7M9 7h8v8" />
-            </svg>
+            <ArrowIcon />
           </a>
         </div>
 

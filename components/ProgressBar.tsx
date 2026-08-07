@@ -15,16 +15,16 @@ export default function ProgressBar({
 }: ProgressBarProps) {
   const reduce = useReducedMotion();
   const ratio = total > 0 ? shipped / total : 0;
-  /** Rounded for the label only — the fill uses the exact ratio, so it lands
+  /** Rounded for the label only. The fill uses the exact ratio, so it lands
    *  precisely on a slot divider instead of stopping fractionally short. */
   const pct = Math.round(ratio * 100);
 
   /**
    * The gradient sits full-width underneath so early progress shows the gold
    * end rather than a squashed whole gradient. A solid mask the same colour as
-   * the track covers the unfilled part, and we scale it away from the right —
-   * a transform, so it animates on the compositor and cannot fail to
-   * interpolate the way `clip-path` strings do.
+   * the track covers the unfilled part, and we scale it away from the right.
+   * Scaling is a transform, so it animates on the compositor and cannot fail
+   * to interpolate the way `clip-path` strings do.
    */
   const masked = 1 - ratio;
 
@@ -76,7 +76,7 @@ export default function ProgressBar({
           }
         />
 
-        {/* Slot dividers — one per Ship30 entry, so the scale reads honestly. */}
+        {/* Slot dividers, one per Ship30 entry, so the scale reads honestly. */}
         <div aria-hidden className="pointer-events-none absolute inset-0 flex">
           {Array.from({ length: total }, (_, i) => (
             <div

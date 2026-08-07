@@ -23,7 +23,7 @@
   }
 
   /* One consistent, visible focus ring across every interactive element.
-     No border-radius here — the ring inherits each element's own radius. */
+     No border-radius here, so the ring inherits each element's own radius. */
   :focus-visible {
     @apply outline-none ring-2 ring-gold ring-offset-2 ring-offset-ground;
   }

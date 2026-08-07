@@ -21,7 +21,8 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
-const description = `${profile.role} — ${profile.bio}`;
+const title = `${profile.name} · ${profile.role}`;
+const description = `${profile.role}. ${profile.bio}`;
 
 /**
  * Absolute base for OG/Twitter image URLs. Vercel sets the production-domain
@@ -36,17 +37,17 @@ const siteUrl =
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: `${profile.name} — ${profile.role}`,
+  title,
   description,
   openGraph: {
-    title: `${profile.name} — ${profile.role}`,
+    title,
     description,
     type: "website",
     siteName: profile.name,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${profile.name} — ${profile.role}`,
+    title,
     description,
   },
 };
