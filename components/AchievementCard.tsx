@@ -1,0 +1,216 @@
+"use client";
+
+import { motion, useReducedMotion, type Variants } from "framer-motion";
+import type { Achievement, Rarity } from "@/lib/data";
+
+/** Gold is the unlock accent — the pulse is gold regardless of rarity. */
+const GOLD = "232, 179, 77";
+
+const rarityStyle: Record<Rarity, { label: string; text: string; line: string; border: string }> = {
+  common: {
+    label: "Common",
+    text: "text-rarity-common",
+    line: "via-rarity-common",
+    border: "border-rarity-common/25",
+  },
+  rare: {
+    label: "Rare",
+    text: "text-rarity-rare",
+    line: "via-rarity-rare",
+    border: "border-rarity-rare/25",
+  },
+  epic: {
+    label: "Epic",
+    text: "text-rarity-epic",
+    line: "via-rarity-epic",
+    border: "border-rarity-epic/25",
+  },
+  legendary: {
+    label: "Legendary",
+    text: "text-rarity-legendary",
+    line: "via-rarity-legendary",
+    border: "border-rarity-legendary/40",
+  },
+};
+
+const unlockVariants: Variants = {
+  hidden: { opacity: 0, y: 18, filter: "grayscale(1) brightness(0.6)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "grayscale(0) brightness(1)",
+    boxShadow: [
+      `0 0 0 0 rgba(${GOLD}, 0)`,
+      `0 0 38px 6px rgba(${GOLD}, 0.42)`,
+      `0 0 0 0 rgba(${GOLD}, 0)`,
+    ],
+    transition: {
+      opacity: { duration: 0.45, ease: "easeOut" },
+      y: { duration: 0.55, ease: "easeOut" },
+      filter: { duration: 0.75, delay: 0.12, ease: "easeOut" },
+      boxShadow: {
+        duration: 1.7,
+        delay: 0.18,
+        times: [0, 0.32, 1],
+        ease: "easeOut",
+      },
+    },
+  },
+};
+
+/**
+ * Reduced motion: no desaturation, no pulse — just a plain fade.
+ *
+ * `filter` and `y` are neutralised explicitly rather than omitted. The server
+ * renders before `useReducedMotion` can report, so it emits the unlock
+ * variant's inline `filter`/`transform`; a variant set that simply left those
+ * keys out would never clear them and the card would stay grey and offset.
+ */
+const fadeVariants: Variants = {
+  hidden: { opacity: 0, y: 0, filter: "none" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "none",
+    transition: { duration: 0.3, ease: "easeOut" },
+  },
+};
+
+function LockIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-5 w-5"
+      aria-hidden
+    >
+      <rect x="4" y="10.5" width="16" height="10" rx="2.5" />
+      <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" />
+    </svg>
+  );
+}
+
+function ArrowIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="h-3.5 w-3.5 transition-transform duration-200 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+      aria-hidden
+    >
+      <path d="M7 17 17 7M9 7h8v8" />
+    </svg>
+  );
+}
+
+export default function AchievementCard({ item }: { item: Achievement }) {
+  const reduce = useReducedMotion();
+  const variants = reduce ? fadeVariants : unlockVariants;
+  const viewport = { once: true, amount: 0.35 } as const;
+
+  if (item.locked) {
+    return (
+      <motion.article
+        variants={fadeVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewport}
+        className="js-reveal flex flex-col gap-3 rounded-2xl border border-dashed border-white/10 bg-surface/40 p-5 transition-colors duration-300 hover:border-white/20"
+      >
+        <div className="flex items-center justify-between text-muted">
+          <LockIcon />
+          <span className="font-mono text-[10px] uppercase tracking-[0.18em]">
+            Locked
+          </span>
+        </div>
+
+        <h3 className="font-display text-xl font-bold tracking-tight text-muted">
+          <span aria-hidden>???</span>
+          <span className="sr-only">Locked achievement</span>
+        </h3>
+
+        <p className="text-sm leading-relaxed text-muted/80">{item.blurb}</p>
+      </motion.article>
+    );
+  }
+
+  const rarity = rarityStyle[item.rarity];
+
+  return (
+    <motion.article
+      variants={variants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewport}
+      className={`js-reveal group relative flex flex-col gap-4 overflow-hidden rounded-2xl border bg-surface p-6 transition-colors duration-300 hover:bg-surfaceHi sm:p-7 ${rarity.border}`}
+    >
+      {/* Rarity edge — card identity, distinct from the gold unlock pulse. */}
+      <span
+        aria-hidden
+        className={`absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent to-transparent ${rarity.line}`}
+      />
+
+      <div className="flex items-center justify-between gap-3">
+        <span
+          className={`font-mono text-[10px] uppercase tracking-[0.18em] ${rarity.text}`}
+        >
+          ◆ {rarity.label}
+        </span>
+        {item.shipNumber !== undefined && (
+          <span className="rounded-full border border-gold/30 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-gold">
+            Ship #{String(item.shipNumber).padStart(2, "0")}
+          </span>
+        )}
+      </div>
+
+      <h3 className="font-display text-xl font-bold leading-snug tracking-tight text-ink sm:text-2xl">
+        {item.title}
+      </h3>
+
+      <p className="text-sm leading-relaxed text-muted sm:text-[15px]">
+        {item.blurb}
+      </p>
+
+      {item.tags && item.tags.length > 0 && (
+        <ul className="flex flex-wrap gap-2">
+          {item.tags.map((tag) => (
+            <li
+              key={tag}
+              className="rounded-full bg-surfaceHi px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-muted ring-1 ring-inset ring-white/5 group-hover:ring-white/10"
+            >
+              {tag}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div className="mt-auto pt-1">
+        {item.href ? (
+          <a
+            href={item.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group/link inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.14em] text-teal transition-colors hover:text-ink"
+          >
+            View repo
+            <ArrowIcon />
+          </a>
+        ) : (
+          item.note && (
+            <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted/70">
+              {item.note}
+            </p>
+          )
+        )}
+      </div>
+    </motion.article>
+  );
+}

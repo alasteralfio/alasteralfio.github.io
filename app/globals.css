@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Fixed nav clearance for anchor jumps. */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    @apply bg-ground text-ink font-body antialiased;
+  }
+
+  /* Anchor targets sit clear of the fixed nav. */
+  section[id] {
+    scroll-margin-top: 6rem;
+  }
+
+  ::selection {
+    @apply bg-gold/30 text-ink;
+  }
+
+  /* One consistent, visible focus ring across every interactive element.
+     No border-radius here — the ring inherits each element's own radius. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-gold ring-offset-2 ring-offset-ground;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
