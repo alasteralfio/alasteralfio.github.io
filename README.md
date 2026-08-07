@@ -1,4 +1,4 @@
-# alasteralfio.github.io
+# Alaster Alfio · Portfolio
 
 Personal portfolio built as a completionist / achievement-unlock system. Shipped work
 renders as unlocked achievement cards, the roadmap as locked `???` cards, and a

@@ -77,7 +77,7 @@ const channels = [
   },
   {
     label: "Résumé",
-    value: "PDF, one page",
+    value: "PDF",
     href: profile.resume,
     icon: <DocIcon />,
     external: true,

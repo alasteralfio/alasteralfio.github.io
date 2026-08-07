@@ -15,17 +15,13 @@ export default function ProgressBar({
 }: ProgressBarProps) {
   const reduce = useReducedMotion();
   const ratio = total > 0 ? shipped / total : 0;
-  /** Rounded for the label only. The fill uses the exact ratio, so it lands
-   *  precisely on a slot divider instead of stopping fractionally short. */
+  // Round for the label only. The fill needs the exact ratio to land on a
+  // slot divider rather than stopping just short of it.
   const pct = Math.round(ratio * 100);
 
-  /**
-   * The gradient sits full-width underneath so early progress shows the gold
-   * end rather than a squashed whole gradient. A solid mask the same colour as
-   * the track covers the unfilled part, and we scale it away from the right.
-   * Scaling is a transform, so it animates on the compositor and cannot fail
-   * to interpolate the way `clip-path` strings do.
-   */
+  // A full-width gradient sits underneath and a track-coloured mask hides the
+  // unfilled part, scaled away from the right. Transforms animate reliably;
+  // clip-path strings silently fail to interpolate.
   const masked = 1 - ratio;
 
   return (
@@ -54,7 +50,7 @@ export default function ProgressBar({
         aria-valuemax={total}
         aria-valuetext={`${shipped} of ${total} shipped, ${pct} percent`}
         aria-label="Ship30 progress"
-        // `--mask` is the no-JS fallback target; see the noscript block in layout.
+        // No-JS fallback target, read by the noscript block in layout.
         style={{ ["--mask" as string]: `${masked}` }}
         className={`relative w-full overflow-hidden rounded-full bg-surfaceHi ${
           size === "lg" ? "h-4" : "h-3"
@@ -76,7 +72,7 @@ export default function ProgressBar({
           }
         />
 
-        {/* Slot dividers, one per Ship30 entry, so the scale reads honestly. */}
+        {/* One divider per Ship30 slot, so the scale reads honestly. */}
         <div aria-hidden className="pointer-events-none absolute inset-0 flex">
           {Array.from({ length: total }, (_, i) => (
             <div
@@ -86,7 +82,7 @@ export default function ProgressBar({
           ))}
         </div>
 
-        {/* Drawn last so the inset hairline sits above the fill. */}
+        {/* Last, so the hairline sits above the fill. */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 rounded-full ring-1 ring-inset ring-white/10"

@@ -1,41 +1,32 @@
-/**
- * Single source of truth for site content.
- *
- * Adding a shipped project = editing this file. Nothing else needs to change.
- *
- * Locked entries keep their real titles/blurbs here. The UI masks them as "???"
- * for visitors. When one ships: set `locked: false`, add `tags`, `href`, and a
- * `shipNumber` if it is part of the Ship30 program, then bump `ship30.shipped`.
- */
+// All site content lives here. Adding a project means editing this file only.
+//
+// Locked entries keep their real titles; the UI masks them as "???". To ship
+// one: locked: false, add tags and href, add shipNumber if it's a Ship30 drop,
+// then bump ship30.shipped.
 
 export type Rarity = "common" | "rare" | "epic" | "legendary";
 
-/** Long-form content for a project's own page. Omit to render card-only. */
+/** Omit to render a card with no detail page. */
 export interface ProjectDetail {
-  /** Shown under the title on the detail page. */
+  /** Shown under the title, e.g. employer and dates. */
   timeframe?: string;
-  /** What the work was, in a few paragraphs. */
   overview: string[];
-  /** What was learned or what would change. First person. */
   reflection: string[];
 }
 
 export interface Achievement {
   id: string;
-  /** Real title. Forced to "???" in the UI while locked. */
   title: string;
   blurb: string;
   tags?: string[];
   rarity: Rarity;
-  /** External link. Omitted for internal work and locked entries. */
   href?: string;
-  /** Explains an absent link, e.g. internal work with no public repo. */
+  /** Shown in place of a link, e.g. "no public repo". */
   note?: string;
-  /** true => desaturated, "???", no tags or link. */
   locked?: boolean;
-  /** Ship30 index. Absent for work outside the program. */
+  /** Ship30 index. Absent for anything outside the programme. */
   shipNumber?: number;
-  /** Present => card links to /projects/<id> for the long write-up. */
+  /** Present => the card links to /projects/<id>. */
   detail?: ProjectDetail;
 }
 

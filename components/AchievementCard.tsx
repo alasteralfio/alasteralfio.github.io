@@ -5,37 +5,37 @@ import { motion, useReducedMotion, type Variants } from "framer-motion";
 import type { Achievement, Rarity } from "@/lib/data";
 import ArrowIcon from "./ArrowIcon";
 
-/** Gold is the unlock accent, so the pulse is gold regardless of rarity. */
 const GOLD = "232, 179, 77";
 
-/** `edge` is a flat rule, not a gradient. A fading hairline reads generic. */
+// Rarity tints the whole 1px frame, with a stronger top edge. Drawing the top
+// edge as a separate element instead would stack on the border and read 2px.
 const rarityStyle: Record<
   Rarity,
-  { label: string; text: string; edge: string; border: string }
+  { label: string; text: string; border: string; top: string }
 > = {
   common: {
     label: "Common",
     text: "text-rarity-common",
-    edge: "bg-rarity-common/50",
     border: "border-rarity-common/25",
+    top: "border-t-rarity-common/60",
   },
   rare: {
     label: "Rare",
     text: "text-rarity-rare",
-    edge: "bg-rarity-rare/50",
     border: "border-rarity-rare/25",
+    top: "border-t-rarity-rare/60",
   },
   epic: {
     label: "Epic",
     text: "text-rarity-epic",
-    edge: "bg-rarity-epic/50",
     border: "border-rarity-epic/25",
+    top: "border-t-rarity-epic/60",
   },
   legendary: {
     label: "Legendary",
     text: "text-rarity-legendary",
-    edge: "bg-rarity-legendary/70",
     border: "border-rarity-legendary/40",
+    top: "border-t-rarity-legendary/80",
   },
 };
 
@@ -64,14 +64,9 @@ const unlockVariants: Variants = {
   },
 };
 
-/**
- * Reduced motion: no desaturation, no pulse, just a plain fade.
- *
- * `filter` and `y` are neutralised explicitly rather than omitted. The server
- * renders before `useReducedMotion` can report, so it emits the unlock
- * variant's inline `filter`/`transform`; a variant set that simply left those
- * keys out would never clear them and the card would stay grey and offset.
- */
+// filter and y are set to none rather than left out. SSR runs before
+// useReducedMotion reports, so it emits the unlock variant's inline styles;
+// omitting the keys here would leave the card grey and offset forever.
 const fadeVariants: Variants = {
   hidden: { opacity: 0, y: 0, filter: "none" },
   visible: {
@@ -104,9 +99,8 @@ export default function AchievementCard({ item }: { item: Achievement }) {
   const reduce = useReducedMotion();
   const variants = reduce ? fadeVariants : unlockVariants;
 
-  // Locked cards do not animate in. Nothing has been earned, so there is no
-  // unlock to play, and reserving the reveal for unlocked work keeps it a
-  // single deliberate moment rather than a page-wide fade.
+  // Locked cards don't animate. Nothing has been earned, and keeping the
+  // reveal on real work stops it becoming a page-wide fade.
   if (item.locked) {
     return (
       <article className="flex flex-col gap-3 rounded-2xl border border-dashed border-white/10 bg-surface/40 p-5 transition-colors duration-300 hover:border-white/20">
@@ -135,14 +129,8 @@ export default function AchievementCard({ item }: { item: Achievement }) {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.35 }}
-      className={`js-reveal relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl border bg-surface p-6 transition-colors duration-300 group-hover:bg-surfaceHi sm:p-7 ${rarity.border}`}
+      className={`js-reveal relative flex h-full flex-col gap-4 overflow-hidden rounded-2xl border bg-surface p-6 transition-colors duration-300 group-hover:bg-surfaceHi sm:p-7 ${rarity.border} ${rarity.top}`}
     >
-      {/* Rarity rule. Card identity, distinct from the gold unlock pulse. */}
-      <span
-        aria-hidden
-        className={`absolute inset-x-0 top-0 h-px ${rarity.edge}`}
-      />
-
       <div className="flex items-center justify-between gap-3">
         <span
           className={`font-mono text-[10px] uppercase tracking-[0.18em] ${rarity.text}`}
@@ -169,8 +157,7 @@ export default function AchievementCard({ item }: { item: Achievement }) {
           {item.tags.map((tag) => (
             <li
               key={tag}
-              // Recessed rather than elevated: `muted` on `surfaceHi` is only
-              // 4.36:1, the one spot in the design that missed AA.
+              // Recessed, not raised: muted on surfaceHi is 4.36:1 and fails AA.
               className="rounded-full bg-ground/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-muted ring-1 ring-inset ring-white/5"
             >
               {tag}
@@ -188,8 +175,7 @@ export default function AchievementCard({ item }: { item: Achievement }) {
     </motion.article>
   );
 
-  // Whole card is the link, so the detail page has one obvious entry point and
-  // there is no anchor nested inside another.
+  // The card itself is the link, so nothing is nested inside another anchor.
   if (item.detail) {
     return (
       <Link

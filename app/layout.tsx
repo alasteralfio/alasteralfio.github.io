@@ -24,11 +24,8 @@ const mono = JetBrains_Mono({
 const title = `${profile.name} · ${profile.role}`;
 const description = `${profile.role}. ${profile.bio}`;
 
-/**
- * Absolute base for OG/Twitter image URLs. Vercel sets the production-domain
- * var automatically, so this resolves correctly without hardcoding a domain
- * that is still undecided. Override with NEXT_PUBLIC_SITE_URL once one exists.
- */
+// OG image URLs need an absolute base. Vercel fills in the production domain;
+// set NEXT_PUBLIC_SITE_URL once there's a custom one.
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ??
   (process.env.VERCEL_PROJECT_PRODUCTION_URL
@@ -67,8 +64,8 @@ export default function RootLayout({
       className={`${display.variable} ${body.variable} ${mono.variable}`}
     >
       <body>
-        {/* Scroll reveals never fire without JS, which would leave the page
-            blank. Show everything in its resolved state instead. */}
+        {/* Without JS the scroll reveals never fire and the page renders
+            blank, so force everything to its resolved state. */}
         <noscript>
           <style>{`
             .js-reveal { opacity: 1 !important; filter: none !important; transform: none !important; }

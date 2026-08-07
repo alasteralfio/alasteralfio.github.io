@@ -1,24 +1,16 @@
 import { ImageResponse } from "next/og";
 import { profile, ship30 } from "@/lib/data";
 
-/**
- * Edge runtime: `@vercel/og`'s Node build resolves its bundled assets with
- * `fileURLToPath` and throws `Invalid URL` when prerendering on Windows.
- * The edge build has no such step, and it is what Vercel runs anyway.
- */
+// @vercel/og's Node build throws "Invalid URL" prerendering on Windows.
+// The edge build doesn't, and it's what Vercel runs anyway.
 export const runtime = "edge";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const alt = `${profile.name} · ${profile.role}`;
 
-/**
- * The hero "player card", rendered as the social preview.
- *
- * Deliberately no custom font fetch: `next/og` bundles a default face, and
- * pulling Unbounded would mean a build-time request for a TTF (satori cannot
- * read the woff2 that Google serves by default). Not worth the fragility.
- */
+// The player card as a social preview. No custom font: satori can't read the
+// woff2 Google serves, and a build-time TTF fetch isn't worth the fragility.
 export default function OpengraphImage() {
   const ratio = ship30.shipped / ship30.total;
   const pct = Math.round(ratio * 100);
@@ -118,10 +110,9 @@ export default function OpengraphImage() {
               overflow: "hidden",
             }}
           >
-            {/* Clips a full-track-width gradient rather than squashing the
-                whole ramp into the fill, so early progress reads gold. The
-                same reason the site's bar masks instead of scaling. Track
-                width is fixed: 1200 - (72 page + 56 card + 1 border) * 2. */}
+            {/* Clip a full-width gradient so early progress reads gold
+                instead of squashing the whole ramp into the fill. Track width
+                is fixed: 1200 - (72 page + 56 card + 1 border) * 2. */}
             <div
               style={{
                 display: "flex",

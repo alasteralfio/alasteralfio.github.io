@@ -5,28 +5,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        /**
-         * The design doc calls this token `base`. It is named `ground` here
-         * because Tailwind ships a core `text-base` font-size utility — a
-         * `base` color would emit a second, later `.text-base` rule that
-         * silently repaints anything using `text-base`/`sm:text-base` for size.
-         */
+        // The design doc calls this `base`. Renamed because Tailwind ships a
+        // core text-base font-size utility: a `base` colour would emit a
+        // second .text-base rule and repaint anything sized with it.
         ground: "#14171E",
         surface: "#1C2029",
         surfaceHi: "#232838",
         gold: "#E8B34D",
         teal: "#4FD1C5",
         ink: "#EDEEF2",
-        /**
-         * Reading copy — paragraphs and card blurbs. Sits between `ink` and
-         * `muted`: the token doc reserves `muted` for labels and metadata, and
-         * multi-line body text set in it reads dim (4.8:1 on `surface`).
-         * This is 8.6:1 on `surface`, 9.4:1 on `ground`.
-         */
+        // Reading copy. muted is for labels only; at 4.8:1 it reads dim over
+        // multiple lines. This is 8.6:1 on surface.
         body: "#B6BCCB",
         muted: "#868C9C",
-        // Rarity ladder — game vocabulary. Only `common` and `legendary`
-        // are in use today; the rest are here for future drops.
         rarity: {
           common: "#868C9C",
           rare: "#4FD1C5",
