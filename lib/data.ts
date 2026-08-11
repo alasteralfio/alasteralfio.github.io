@@ -6,12 +6,22 @@
 
 export type Rarity = "common" | "rare" | "epic" | "legendary";
 
+export interface ProjectImage {
+  src: string;
+  alt: string;
+  /** Intrinsic dimensions — required by next/image. */
+  w: number;
+  h: number;
+}
+
 /** Omit to render a card with no detail page. */
 export interface ProjectDetail {
   /** Shown under the title, e.g. employer and dates. */
   timeframe?: string;
   overview: string[];
   reflection: string[];
+  /** Optional screenshots. First is the cover; the rest form a gallery. */
+  images?: ProjectImage[];
 }
 
 export interface Achievement {
@@ -21,7 +31,9 @@ export interface Achievement {
   tags?: string[];
   rarity: Rarity;
   href?: string;
-  /** Shown in place of a link, e.g. "no public repo". */
+  /** Link text for `href`. Defaults to "View source". */
+  hrefLabel?: string;
+  /** Extra context line, e.g. "no public repo". Can sit alongside a link. */
   note?: string;
   locked?: boolean;
   /** Ship30 index. Absent for anything outside the programme. */
@@ -107,6 +119,8 @@ export const achievements: Achievement[] = [
       "CycleRAP-based web tool that scores path segments for cycling safety. Extracts curvature by circumcircle, width by single-view metrology, and grade from LiDAR point clouds. All three used to be measured by hand.",
     tags: ["GIS", "Computer Vision", "LiDAR", "Python"],
     rarity: "legendary",
+    href: "/lta-internship-report.pdf",
+    hrefLabel: "View Internship Report",
     note: "Internal LTA project, no public repo.",
     detail: {
       timeframe: "Land Transport Authority · Mar 2026 – Jul 2026",
@@ -123,7 +137,7 @@ export const achievements: Achievement[] = [
   },
   {
     id: "clinical-chatbot",
-    title: "Clinical Guidelines Chatbot",
+    title: "KKH Chatbot",
     blurb:
       "Final year project with KK Women's and Children's Hospital. A web chatbot that gives nurses bedside access to clinical guidelines and medical calculators, using NLP and semantic search instead of manual lookup.",
     tags: ["Python", "JavaScript", "n8n", "NLP"],
@@ -160,6 +174,12 @@ export const achievements: Achievement[] = [
       reflection: [
         "Lighting came first, before any layout work. I wanted an intentionally dark atmosphere rather than a dark scene that just looked underlit, and getting there took a lot of trial and error.",
         "Coding took the longest by far: the chase AI for the mannequins, the randomisation of their poses and symbols, and the final Simon Says puzzle. That last one was the most fiddly, since the generated sequence had to persist and be checked against player input correctly rather than approximately.",
+      ],
+      images: [
+        { src: "/projects/upbringing.png", w: 600, h: 345, alt: "A dim room in the haunted toy house, lit around a decorated tree" },
+        { src: "/projects/upbringing-1.png", w: 650, h: 567, alt: "In-game scene from Upbringing" },
+        { src: "/projects/upbringing-2.png", w: 653, h: 587, alt: "In-game scene from Upbringing" },
+        { src: "/projects/upbringing-3.png", w: 2000, h: 2000, alt: "Promotional art for Upbringing" },
       ],
     },
   },
@@ -200,24 +220,11 @@ export const achievements: Achievement[] = [
         "Pong was where the actual thinking started, working out bounce trajectories and finding the clamp function to keep paddles in bounds. The AI opponent just tracks the ball's position at a speed slightly below the player's, which is enough to feel fair.",
         "Snake was the hardest. Growing the body in the direction of travel, moving on a grid, and self-collision each took more attempts than I expected.",
       ],
-    },
-  },
-  {
-    id: "mastermind",
-    title: "Mastermind CLI",
-    blurb:
-      "The board game Mastermind, ported to the terminal in Python. Extensively configurable: sequence length, duplicate colours, and other rules are all left to the player.",
-    tags: ["Python", "CLI"],
-    rarity: "common",
-    note: "Source not currently public.",
-    detail: {
-      overview: [
-        "Mastermind is a code-breaking board game. This is a terminal port written in Python, submitted for a Python course that let us choose our own project. I picked it to work on something with real game logic rather than a project everyone else would also hand in.",
-        "The player can configure the rules rather than play one fixed variant: sequence length, whether duplicates are allowed, and similar options.",
-      ],
-      reflection: [
-        "It was one of my first Python projects and it showed. Getting the guess-scoring logic right took a lot of trial and error, and I built the menu first mostly so I could see where the program was going.",
-        "Once it worked I went back through and pulled out every value that could reasonably be a player choice. I also cared about how it looked despite being a terminal game, so it has an ASCII logo and a UI laid out to be read rather than just printed.",
+      images: [
+        { src: "/projects/game.png", w: 600, h: 345, alt: "Menu montage of the retro game collection" },
+        { src: "/projects/game-1.png", w: 687, h: 979, alt: "Gameplay from the retro game collection" },
+        { src: "/projects/game-2.png", w: 1196, h: 797, alt: "Gameplay from the retro game collection" },
+        { src: "/projects/game-4.png", w: 994, h: 961, alt: "Gameplay from the retro game collection" },
       ],
     },
   },
@@ -239,6 +246,12 @@ export const achievements: Achievement[] = [
         "Every extension I found for this ran constantly in the background and rewrote pages I had not asked it to touch. A one-off annoyance did not justify that, so the whole design decision was to stay inert until called.",
         "Keeping it that small is why it actually shipped, which is the entire point of the Ship30 exercise.",
       ],
+      images: [
+        { src: "/projects/openconvert-thumbnail.png", w: 440, h: 280, alt: "OpenConvert logo and tagline: every price on the web, in your currency" },
+        { src: "/projects/openconvert-convert.png", w: 640, h: 400, alt: "OpenConvert popup converting GBP to JPY, accepting math in the amount field and converting one-to-many" },
+        { src: "/projects/openconvert-sites.png", w: 640, h: 400, alt: "OpenConvert live price conversion settings for rewriting prices as you browse" },
+        { src: "/projects/openconvert-settings.png", w: 640, h: 400, alt: "OpenConvert number formatting settings for decimal places and number format" },
+      ],
     },
   },
   {
@@ -258,14 +271,14 @@ export const achievements: Achievement[] = [
   {
     id: "realtime-collab",
     title: "Real-time Collaboration",
-    blurb: "Real-time collaboration, TBD.",
+    blurb: "Real-time, multiplayer, conflict-free.",
     rarity: "rare",
     locked: true,
   },
   {
     id: "cli-tool",
     title: "CLI Tooling",
-    blurb: "Systems-level CLI tooling.",
+    blurb: "Fast, low-level, built for the terminal.",
     rarity: "rare",
     locked: true,
   },

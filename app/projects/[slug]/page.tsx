@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ArrowIcon, { BackArrowIcon } from "@/components/ArrowIcon";
 import Footer from "@/components/Footer";
+import ImageFrame from "@/components/ImageFrame";
 import Nav from "@/components/Nav";
 import { achievements, profile, projectsWithDetail } from "@/lib/data";
 
@@ -31,6 +32,7 @@ export default function ProjectPage({ params }: Params) {
   if (!project) notFound();
 
   const detail = project.detail!;
+  const [cover, ...gallery] = detail.images ?? [];
 
   return (
     <>
@@ -68,28 +70,52 @@ export default function ProjectPage({ params }: Params) {
           </ul>
         )}
 
+        {cover && (
+          <div className="mt-10">
+            <ImageFrame image={cover} priority sizes="(min-width: 768px) 720px, 100vw" />
+          </div>
+        )}
+
         <Prose heading="Overview" paragraphs={detail.overview} />
         <Prose heading="Reflection" paragraphs={detail.reflection} />
 
-        <div className="mt-14 border-t border-white/10 pt-8">
-          {project.href ? (
-            <a
-              href={project.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.14em] text-teal transition-colors hover:text-ink"
-            >
-              View source
-              <ArrowIcon className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </a>
-          ) : (
-            project.note && (
+        {gallery.length > 0 && (
+          <section className="mt-12">
+            <h2 className="font-display text-xl font-bold tracking-tight text-ink sm:text-2xl">
+              Gallery
+            </h2>
+            <div className="mt-6 grid gap-6 sm:grid-cols-2">
+              {gallery.map((image) => (
+                <ImageFrame
+                  key={image.src}
+                  image={image}
+                  sizes="(min-width: 768px) 340px, 100vw"
+                />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {(project.href || project.note) && (
+          <div className="mt-14 flex flex-col gap-3 border-t border-white/10 pt-8">
+            {project.href && (
+              <a
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-[0.14em] text-teal transition-colors hover:text-ink"
+              >
+                {project.hrefLabel ?? "View source"}
+                <ArrowIcon className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </a>
+            )}
+            {project.note && (
               <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
                 {project.note}
               </p>
-            )
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </main>
 
       <Footer />
