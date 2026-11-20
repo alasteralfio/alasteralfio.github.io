@@ -52,8 +52,8 @@ export const profile = {
   name: "Alaster Alfio",
   role: "Software Developer",
   roleDetail: "Dip. Digital Design & Development, Republic Polytechnic",
-  status: "Graduating Sep 2026",
-  bio: "Spent the first half of 2026 building path-safety tooling at LTA. Now shipping small tools while I wait on graduation.",
+  status: "Graduated Sep 2026",
+  bio: "Multi-aspect developer, highlighted for AI and CV work at the Land Transport Authority.",
   email: "alasteralfio@gmail.com",
   github: "https://github.com/alasteralfio",
   linkedin: "https://www.linkedin.com/in/alaster-alfio-zheng-b36b99279/",
@@ -70,7 +70,7 @@ export interface Experience {
 export const experience: Experience[] = [
   {
     company: "Land Transport Authority",
-    role: "Software Developer Intern",
+    role: "Software Developer Intern / Team Lead",
     period: "Mar 2026 – Jul 2026",
     points: [
       "Built an end-to-end gradient processing pipeline from raw LiDAR point clouds, covering centerline stitching, outlier and seam-jump filtering, and slope computation, replacing a manual geospatial workflow.",

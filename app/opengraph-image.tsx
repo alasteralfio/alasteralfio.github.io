@@ -82,7 +82,7 @@ export default function OpengraphImage() {
               marginTop: 12,
             }}
           >
-            LTA PSAT INTERN · DIP. DIGITAL DESIGN &amp; DEVELOPMENT, RP
+            LTA SOFTWARE DEV INTERN / TEAM LEAD · DIP. DIGITAL DESIGN &amp; DEVELOPMENT, RP
           </div>
 
           <div
